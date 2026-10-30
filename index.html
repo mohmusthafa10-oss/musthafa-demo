@@ -3,11 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Welcome</h1>
+    <title>Login | Nova</title>
 
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit consequuntur veritatis tempora modi architecto, repudiandae in illo libero temporibus, praesentium nemo aspernatur quia, quod ea nesciunt porro dolores reprehenderit nihil?</p>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a, #312e81, #701a75);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Background decorations */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .circle.one {
+            width: 250px;
+            height: 250px;
+            background: rgba(168, 85, 247, 0.35);
+            top: -70px;
+            left: -50px;
+        }
+
+        .circle.two {
+            width: 300px;
+            height: 300px;
+            background: rgba(59, 130, 246, 0.3);
+            bottom: -100px;
+            right: -60px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+        }
+
+        /* Login card */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 32px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: appear 0.8s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #d1d5db;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #f3f4f6;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            outline: none;
+            color: white;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #b8b8c8;
+        }
+
+        input:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #d1d5db;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0 24px;
+            font-size: 12px;
+            gap: 10px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #e5e7eb;
+        }
+
+        .remember input {
+            width: 14px;
+            height: 14px;
+            accent-color: #a855f7;
+        }
+
+        a {
+            color: #c4b5fd;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+        }
+
+        .login-button:active {
+            transform: scale(0.98);
+        }
+
+        .signup {
+            text-align: center;
+            color: #d1d5db;
+            font-size: 13px;
+            margin-top: 25px;
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            color: #fde68a;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 32px 23px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="circle one"></div>
+    <div class="circle two"></div>
+
+    <main class="login-container">
+
+        <div class="logo">N</div>
+
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Sign in to continue to your account</p>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                        aria-label="Show password"
+                        aria-pressed="false"
+                    >SHOW</button>
+                </div>
+            </div>
+
+            <div class="options">
+                <label class="remember">
+                    <input type="checkbox" id="remember">
+                    Remember me
+                </label>
+
+                <a href="#" id="forgotLink">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="login-button">
+                Sign In →
+            </button>
+
+            <p class="message" id="message" role="status"></p>
+
+        </form>
+
+        <p class="signup">
+            Don't have an account?
+            <a href="#" id="signupLink">Create account</a>
+        </p>
+
+    </main>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+        const loginForm = document.getElementById("loginForm");
+        const message = document.getElementById("message");
+
+        // Show or hide password
+        togglePassword.addEventListener("click", function () {
+            const isHidden = passwordInput.type === "password";
+
+            passwordInput.type = isHidden ? "text" : "password";
+            togglePassword.textContent = isHidden ? "HIDE" : "SHOW";
+            togglePassword.setAttribute("aria-label",
+                isHidden ? "Hide password" : "Show password");
+            togglePassword.setAttribute("aria-pressed", String(isHidden));
+        });
+
+        // Demo form submission
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            message.style.display = "block";
+            message.textContent =
+                "Demo only. Connect an authentication service to sign in.";
+        });
+
+        // Placeholder links
+        document.getElementById("forgotLink").addEventListener("click", function (event) {
+            event.preventDefault();
+            message.style.display = "block";
+            message.textContent =
+                "Password recovery needs to be connected to your application.";
+        });
+
+        document.getElementById("signupLink").addEventListener("click", function (event) {
+            event.preventDefault();
+            message.style.display = "block";
+            message.textContent =
+                "Create an account page has not been configured yet.";
+        });
+    </script>
+
 </body>
 </html>
